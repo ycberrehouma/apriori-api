@@ -20,7 +20,10 @@ print(frequence)
 
 #Calculate Min support of our dataset of a threshold 50%
 Min_Support=len(array2d)*0.5
+Min_Confidence=0.7
+
 print("Our Min Support for a threshold of 50% is eqaul to: ",Min_Support)
+print("Our Min Confidence is equal to: ",Min_Confidence)
 
 #1st Cut
 #Remove each pattern with a support less than the Min_Support
@@ -107,6 +110,27 @@ while(len(output)>1 ):
     print(len(output))
     converted=convertlist(output)
     print()
+converted=convertlist(output)
+for i in range(len(converted)):
+    zib=[]
+    c = converted[i].split()
+    for k in range(len(c)):
+        zib.append(c[k])
+    zib=poss(zib,len(c)-1)
+    print("Association rules from", converted[i])
+    for j in range(len(zib)):
+        x = [item for item in converted[i] if item not in zib[j]]
+
+        print(zib[j],"->" ,x[0])
+        confidence=0
+        print("confidence = #",converted[i]," / ",zib[j]," = ",confidence)
+        if confidence >= Min_Confidence:
+            print("Therefore, it is a strong association rule")
+        else:
+            print("Not a strong association rule")
+
+
+
 
 print("The pattern of all plant species (i.e., ids) in the forests with support  threshold = 50 is:")
 print(output)
