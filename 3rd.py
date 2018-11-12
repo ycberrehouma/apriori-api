@@ -55,7 +55,6 @@ def counts(poss,orig):
                     true="false"
             if true=="true":
                 count=count+1
-        count/
         temp.append([poss[i],count])
     df = pd.DataFrame(temp, columns=['item', 'freq'])
 
@@ -87,9 +86,17 @@ def convertlist(list):
                 converted.append(c[k])
     return converted
 
-def sar(last):
-    input=[]
-    for i in range(len(last)):
+#Return the number of times a pattern occur in the txt file
+def occurence(pattern):
+    count=0
+    for i in range(len(array2d)):
+        true = "true"
+        for j in range(len(pattern)):
+            if int(pattern[j]) not in array2d[i]:
+                true="false"
+        if true=="true":
+            count=count+1
+    return count
 
 
 
@@ -103,19 +110,38 @@ while(len(output)>1 ):
     empty=0
     s=s+1
     frequence = (unique(converted))
-    print(len(frequence))
-    print(frequence)
     possibilities=poss(frequence,s)
-    print(possibilities)
     temp=counts(possibilities,array2d)
     if(len(temp)!=0):
         output=temp
     else:
         break
-    print(output)
-    print(len(output))
     converted=convertlist(output)
     print()
+
+    for i in range(len(output)):
+        zib = []
+        converted = convertlist(output[i])
+        zib = poss(converted, len(converted)-1)
+        print("-----")
+        print("Association rules from", converted)
+        for j in range(len(zib)):
+            wa = []
+            c = zib[j].split()
+            for k in range(len(c)):
+                if c[k].isdigit():
+                    wa.append(c[k])
+            x = [item for item in converted if item not in zib[j]]
+            print(zib[j], "->", x[0])
+            z = occurence(wa)
+            g = occurence(converted)
+            confidence = g / z
+            print("confidence = #", converted, " / ", wa, " = ", z, " / ", g, " =", confidence)
+            if confidence >= Min_Confidence:
+                print("Therefore, it is a strong association rule")
+            else:
+                print("Not a strong association rule")
+            print("----")
 
 
 print("The pattern of all plant species (i.e., ids) in the forests with support  threshold = 50 is:")

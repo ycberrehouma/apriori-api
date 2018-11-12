@@ -29,7 +29,7 @@ print("Our Min Confidence is equal to: ",Min_Confidence)
 #Remove each pattern with a support less than the Min_Support
 temp=[]
 for i in range(len(frequence)):
-    if frequence[i] >= 172.2:
+    if frequence[i] >= 160:
         temp.append(i+1)
 frequence = temp
 print()
@@ -59,7 +59,7 @@ def counts(poss,orig):
     df = pd.DataFrame(temp, columns=['item', 'freq'])
 
     for i in range(len(df.index)):
-        if (df.freq[i]) >= 172.2:
+        if (df.freq[i]) >= 160:
             output.append([df.item[i]])
     return output
 
@@ -126,7 +126,7 @@ converted=convertlist(output)
 for i in range(len(output)):
     zib = []
     converted = convertlist(output[i])
-    zib = poss(converted, 3)
+    zib = poss(converted, len(converted)-1)
     print("-----")
     print("Association rules from", converted)
     for j in range(len(zib)):
@@ -140,7 +140,7 @@ for i in range(len(output)):
         z=occurence(wa)
         g=occurence(converted)
         confidence=g/z
-        print("confidence = #",converted," / ",wa," = ",z," / ",g," =" ,confidence)
+        print("confidence = #",converted," / ",wa," = ",g," / ",z," =" ,confidence)
         if confidence >= Min_Confidence:
             print("Therefore, it is a strong association rule")
         else:
