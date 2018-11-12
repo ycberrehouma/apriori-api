@@ -86,6 +86,18 @@ def convertlist(list):
                 converted.append(c[k])
     return converted
 
+#Return the number of times a pattern occur in the txt file
+def occurence(pattern):
+    count=0
+    for i in range(len(array2d)):
+        true = "true"
+        for j in range(len(pattern)):
+            if int(pattern[j]) not in array2d[i]:
+                true="false"
+        if true=="true":
+            count=count+1
+    return count
+
 
 converted=frequence
 empty=1
@@ -111,23 +123,29 @@ while(len(output)>1 ):
     converted=convertlist(output)
     print()
 converted=convertlist(output)
-for i in range(len(converted)):
-    zib=[]
-    c = converted[i].split()
-    for k in range(len(c)):
-        zib.append(c[k])
-    zib=poss(zib,len(c)-1)
-    print("Association rules from", converted[i])
+for i in range(len(output)):
+    zib = []
+    converted = convertlist(output[i])
+    zib = poss(converted, 3)
+    print("-----")
+    print("Association rules from", converted)
     for j in range(len(zib)):
-        x = [item for item in converted[i] if item not in zib[j]]
-
+        wa=[]
+        c = zib[j].split()
+        for k in range(len(c)):
+            if c[k].isdigit():
+                wa.append(c[k])
+        x = [item for item in converted if item not in zib[j]]
         print(zib[j],"->" ,x[0])
-        confidence=0
-        print("confidence = #",converted[i]," / ",zib[j]," = ",confidence)
+        z=occurence(wa)
+        g=occurence(converted)
+        confidence=g/z
+        print("confidence = #",converted," / ",wa," = ",z," / ",g," =" ,confidence)
         if confidence >= Min_Confidence:
             print("Therefore, it is a strong association rule")
         else:
             print("Not a strong association rule")
+        print("----")
 
 
 

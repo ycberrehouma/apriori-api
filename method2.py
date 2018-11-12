@@ -1,25 +1,26 @@
-import pandas as pd
+with open("forests.txt", "r") as ins:
+    array = []
+    for line in ins:
+        array.append(line)
 
 
-# load dataset
-with open('forests.txt') as file:
-    array2d = [[int(digit) for digit in line.split()] for line in file]
+dic={}
+for i in range(len(array)):
+    dic[i]=array[i]
+print(dic)
 
-
-#1st scan
-#Count frequence of each plant
 frequence=[]
 for j in range(1,207):
     count=0
-    for i in range(len(array2d)):
-        if j in array2d[i]:
+    for i in range(len(dic)):
+        if j in dic[i]:
             count=1+count
     frequence.append(count)
 print("The Frequency of each number as fllow:")
 print(frequence)
 
 #Calculate Min support of our dataset of a threshold 50%
-Min_Support=len(array2d)*0.5
+Min_Support=len(dic)*0.5
 print("Our Min Support for a threshold of 50% is eqaul to: ",Min_Support)
 
 #1st Cut
@@ -51,7 +52,6 @@ def counts(poss,orig):
             for k in range(len(c)):
                 if int(c[k]) not in orig[j]:
                     true="false"
-                    break
             if true=="true":
                 count=count+1
         temp.append([poss[i],count])
