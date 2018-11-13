@@ -9,31 +9,31 @@ with open('forests.txt') as file:
 #1st scan
 #Count frequence of each plant
 frequence=[]
-for j in range(1,6):
+for j in range(1,207):
     count=0
     for i in range(len(array2d)):
         if j in array2d[i]:
             count=1+count
     frequence.append(count)
-print("The Frequency of each number as fllow:")
+print("The Frequency of each number as follow:")
 print(frequence)
 
 #Calculate Min support of our dataset of a threshold 50%
 Min_Support=len(array2d)*0.4
 Min_Confidence=0.7
 
-print("Our Min Support for a threshold of 50% is eqaul to: ",Min_Support)
+print("Our Min Support for a threshold of 40% is eqaul to: ",Min_Support)
 print("Our Min Confidence is equal to: ",Min_Confidence)
 
 #1st Cut
-#Remove each pattern with a support less than the Min_Supporto
+#Remove each pattern with a support less than the Min_Support
 temp=[]
 for i in range(len(frequence)):
-    if frequence[i] >= 2:
+    if frequence[i] >= Min_Support:
         temp.append(i+1)
 frequence = temp
 print()
-print("Cut 1 of min threshold equal to 50%:")
+print("Cut 1 of min threshold equal to 40%:")
 print(frequence)
 
 #This Function returns all the possibles set of all unique plants ID in a list
@@ -59,7 +59,7 @@ def counts(poss,orig):
     df = pd.DataFrame(temp, columns=['item', 'freq'])
 
     for i in range(len(df.index)):
-        if (df.freq[i]) >= 2:
+        if (df.freq[i]) >= Min_Support:
             output.append([df.item[i]])
     return output
 
@@ -99,13 +99,10 @@ def occurence(pattern):
     return count
 
 
-
 converted=frequence
 empty=1
 output=[2,2,2]
 s=1
-print()
-print("Next cuts")
 while(len(output)>1 ):
     empty=0
     s=s+1
@@ -116,33 +113,32 @@ while(len(output)>1 ):
         output=temp
     else:
         break
-    converted=convertlist(output)
-    print()
 
-    for i in range(len(output)):
-        zib = []
-        converted = convertlist(output[i])
-        zib = poss(converted, len(converted)-1)
-        print("-----")
-        print("Association rules from", converted)
-        for j in range(len(zib)):
-            wa = []
-            c = zib[j].split()
-            for k in range(len(c)):
-                if c[k].isdigit():
-                    wa.append(c[k])
-            x = [item for item in converted if item not in zib[j]]
-            print(zib[j], "->", x[0])
-            z = occurence(wa)
-            g = occurence(converted)
-            confidence = g / z
-            print("confidence = #", converted, " / ", wa, " = ", z, " / ", g, " =", confidence)
-            if confidence >= Min_Confidence:
-                print("Therefore, it is a strong association rule")
-            else:
-                print("Not a strong association rule")
-            print("----")
+converted=convertlist(output)
+for i in range(len(output)):
+    zib = []
+    converted = convertlist(output[i])
+    zib = poss(converted, len(converted)-1)
+
+    print("Association rules from", converted)
+    for j in range(len(zib)):
+        wa=[]
+        c = zib[j].split()
+        for k in range(len(c)):
+            if c[k].isdigit():
+                wa.append(c[k])
+        x = [item for item in converted if item not in zib[j]]
+        print(zib[j],"->" ,x[0])
+        z=occurence(wa)
+        g=occurence(converted)
+        confidence=g/z
+        print("confidence = #",converted," / ",wa," = ",g," / ",z," =" ,confidence)
+        if confidence >= Min_Confidence:
+            print("Therefore, it is a strong association rule")
+        else:
+            print("Not a strong association rule")
+        print("----")
 
 
-print("The pattern of all plant species (i.e., ids) in the forests with support  threshold = 50 is:")
-print(output)
+
+
