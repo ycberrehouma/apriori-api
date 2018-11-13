@@ -29,7 +29,7 @@ print("Our Min Confidence is equal to: ",Min_Confidence)
 #Remove each pattern with a support less than the Min_Support
 temp=[]
 for i in range(len(frequence)):
-    if frequence[i] >= 160:
+    if frequence[i] >= 172:
         temp.append(i+1)
 frequence = temp
 print()
@@ -59,7 +59,7 @@ def counts(poss,orig):
     df = pd.DataFrame(temp, columns=['item', 'freq'])
 
     for i in range(len(df.index)):
-        if (df.freq[i]) >= 160:
+        if (df.freq[i]) >= 172:
             output.append([df.item[i]])
     return output
 
@@ -100,13 +100,11 @@ def occurence(pattern):
 
 
 converted=frequence
-empty=1
 output=[2,2,2]
 s=1
 print()
 print("Next cuts")
 while(len(output)>1 ):
-    empty=0
     s=s+1
     frequence = (unique(converted))
     print(len(frequence))

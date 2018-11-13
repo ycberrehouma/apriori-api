@@ -100,11 +100,11 @@ def occurence(pattern):
 
 
 converted=frequence
-empty=1
+
+#Initiating a non empty array with length greater than 1
 output=[2,2,2]
 s=1
 while(len(output)>1 ):
-    empty=0
     s=s+1
     frequence = (unique(converted))
     possibilities=poss(frequence,s)
