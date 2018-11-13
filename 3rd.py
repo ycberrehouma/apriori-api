@@ -116,23 +116,23 @@ while(len(output)>1 ):
 
 converted=convertlist(output)
 for i in range(len(output)):
-    zib = []
+    itemset = []
     converted = convertlist(output[i])
-    zib = poss(converted, len(converted)-1)
+    itemset = poss(converted, len(converted)-1)
 
     print("Association rules from", converted)
-    for j in range(len(zib)):
-        wa=[]
-        c = zib[j].split()
+    for j in range(len(itemset)):
+        itemset_converted=[]
+        c = itemset[j].split()
         for k in range(len(c)):
             if c[k].isdigit():
-                wa.append(c[k])
-        x = [item for item in converted if item not in zib[j]]
-        print(zib[j],"->" ,x[0])
-        z=occurence(wa)
-        g=occurence(converted)
-        confidence=g/z
-        print("confidence = #",converted," / ",wa," = ",g," / ",z," =" ,confidence)
+                itemset_converted.append(c[k])
+        x = [item for item in converted if item not in itemset[j]]
+        print(itemset[j],"->" ,x[0])
+        itemset_occur=occurence(itemset_converted)
+        itemset_converted_occur=occurence(converted)
+        confidence=itemset_converted_occur/itemset_occur
+        print("confidence = #",converted," / ",itemset_converted," = ",itemset_converted_occur," / ",itemset_occur," =" ,confidence)
         if confidence >= Min_Confidence:
             print("Therefore, it is a strong association rule")
         else:
